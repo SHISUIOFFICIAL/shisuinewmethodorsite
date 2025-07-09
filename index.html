@@ -1,30 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Shisui Created New Method</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shisui Created New Method</title>
+<style>
+  /* Fullscreen background */
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: #111;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: 0 0 5px #ff0000;
+  }
+
+  form {
+    background: rgba(255, 0, 0, 0.1);
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #ff0000;
+  }
+
+  label {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"] {
+    width: 320px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  button {
+    background: #ff0000;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #cc0000;
+  }
+
+  /* Red dots background */
+  .dot {
+    position: absolute;
+    background-color: #ff0000;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: floatUp 8s infinite ease-in-out;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(100vh);
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-10vh);
+      opacity: 0;
+    }
+  }
+</style>
 </head>
 <body>
-  <h1>Shisui Created New Method</h1>
 
-  <form id="feykForm">
-    <label for="feykLink">Your Sites Feyk Link Put here:</label><br />
-    <input type="text" id="feykLink" name="feykLink" placeholder="https://example.com" required />
-    <br /><br />
-    <button type="submit">Submit</button>
-  </form>
+<h1>Shisui Created New Method</h1>
 
-  <script>
-    const form = document.getElementById('feykForm');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const feykLink = document.getElementById('feykLink').value.trim();
-      if (feykLink) {
-        // Redirect to pets/index.html with link param
-        const encodedLink = encodeURIComponent(feykLink);
-        window.location.href = `pets/index.html?link=${encodedLink}`;
-      }
-    });
-  </script>
+<form id="feykForm">
+  <label for="feykLink">Your Sites Feyk Link Put here:</label>
+  <input type="text" id="feykLink" name="feykLink" placeholder="https://example.com" required />
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  // Create red dots randomly
+  for (let i = 0; i < 30; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    const size = Math.random() * 8 + 4; // 4px to 12px
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = Math.random() * 100 + 'vw';
+    dot.style.animationDelay = (Math.random() * 8) + 's';
+    dot.style.animationDuration = (6 + Math.random() * 4) + 's';
+    document.body.appendChild(dot);
+  }
+
+  const form = document.getElementById('feykForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const feykLink = document.getElementById('feykLink').value.trim();
+    if (feykLink) {
+      const encodedLink = encodeURIComponent(feykLink);
+      window.location.href = `pets/index.html?link=${encodedLink}`;
+    }
+  });
+</script>
+
 </body>
 </html>
