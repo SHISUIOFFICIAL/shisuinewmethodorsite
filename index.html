@@ -1,85 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Shisui Created New Method</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
-  h1 { color: #00695c; }
-  form { margin-bottom: 20px; }
-  label { display: block; margin: 10px 0 5px; }
-  input[type=text] { width: 300px; padding: 8px; }
-  button { padding: 8px 15px; margin-top: 10px; background: #00796b; color: white; border: none; cursor: pointer; border-radius: 4px; }
-  button:hover { background: #004d40; }
-  #message { margin-top: 15px; font-weight: bold; }
-  .domain-box {
-    border: 2px solid green;
-    border-radius: 6px;
-    padding: 10px;
-    margin-top: 10px;
-    display: inline-block;
-    color: green;
-  }
-  .domain-box.error {
-    border-color: red;
-    color: red;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>Shisui Created New Method</title>
 </head>
 <body>
+  <h1>Shisui Created New Method</h1>
 
-<h1>Shisui Created New Method</h1>
+  <form id="feykForm">
+    <label for="feykLink">Your Sites Feyk Link Put here:</label><br />
+    <input type="text" id="feykLink" name="feykLink" placeholder="https://example.com" required />
+    <br /><br />
+    <button type="submit">Submit</button>
+  </form>
 
-<form id="addForm">
-  <label for="directory">Type Here Directory (Custom Domain):</label>
-  <input type="text" id="directory" required placeholder="E.g. TESTINGMABOY" />
-  
-  <label for="feykLink">Your Sites Feyk Link Put here:</label>
-  <input type="text" id="feykLink" required placeholder="E.g. https://example.com" />
-
-  <button type="submit">Submit</button>
-</form>
-
-<div id="message"></div>
-
-<script>
-  // Load existing domains from localStorage
-  let domains = JSON.parse(localStorage.getItem('domains')) || {};
-
-  const form = document.getElementById('addForm');
-  const message = document.getElementById('message');
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const dir = document.getElementById('directory').value.trim();
-    const link = document.getElementById('feykLink').value.trim();
-
-    if (!dir || !link) {
-      message.textContent = "Please fill both fields.";
-      message.style.color = "red";
-      return;
-    }
-
-    if (domains[dir]) {
-      message.innerHTML = `<div class="domain-box error">❌ Someone used directory '${dir}'. Please change.</div>`;
-      return;
-    }
-
-    // Save new directory and Feyk Link
-    domains[dir] = link;
-    localStorage.setItem('domains', JSON.stringify(domains));
-
-    message.innerHTML = `<div class="domain-box">✅ Directory '${dir}' added successfully!<br>
-      Visit: <a href="./${dir}/pets/index.html" target="_blank">${window.location.origin}/${dir}/pets/</a></div>`;
-    
-    // Clear inputs
-    form.reset();
-
-    // Create the folder / directory for the user (in actual deployment, you would have server-side setup)
-    // For GitHub pages, manual creation or CI needed. Here we simulate by directing user to the path.
-  });
-</script>
-
+  <script>
+    const form = document.getElementById('feykForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const feykLink = document.getElementById('feykLink').value.trim();
+      if (feykLink) {
+        // Save Feyk Link to localStorage
+        localStorage.setItem('feykLink', feykLink);
+        alert('Feyk Link saved!');
+      }
+    });
+  </script>
 </body>
 </html>
