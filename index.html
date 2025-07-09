@@ -4,67 +4,55 @@
   <meta charset="UTF-8">
   <title>Shisui Created New Method</title>
   <style>
-    body { font-family: Arial; background-color: #e0f7fa; text-align: center; padding: 30px; }
-    h1 { color: #1a237e; }
-    form { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; }
-    input[type="text"] { padding: 10px; width: 250px; margin: 10px 0; border-radius: 6px; }
-    input[type="submit"] { padding: 10px 20px; background-color: #00796b; color: white; border-radius: 6px; cursor: pointer; }
-    .result-box { width: 150px; height: 150px; margin: 20px auto; background-size: 60%; background-repeat: no-repeat; background-position: center; border-radius: 12px; }
-    .success { background-color: #c8e6c9; background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Green_check.svg/600px-Green_check.svg.png?20221101080848'); }
-    .error { background-color: #ffcdd2; background-image: url('https://images.app.goo.gl/QYmEHHiTXDEn8M9Z6'); }
-
-    .discord-btn {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 12px 20px;
-      background-color: #5865F2;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-    .discord-btn:hover {
-      background-color: #4854d4;
-    }
+    body { font-family: Arial; background: #e0f7fa; padding: 30px; text-align: center;}
+    form { background: white; padding:20px; border-radius:12px; display:inline-block; }
+    input[type="text"] { padding:8px; width:250px; margin:10px 0; }
+    input[type="submit"] { padding:8px 20px; background:#00796b; color:white; border:none; border-radius:6px; cursor:pointer;}
+    .result-box { width:150px; height:150px; margin:20px auto; background-size:60%; background-repeat:no-repeat; background-position:center; border-radius:12px; display:none;}
+    .success { background-color:#c8e6c9; background-image:url('https://upload.wikimedia.org/wikipedia/commons/7/70/Check_mark_green_circle.svg'); }
+    .error { background-color:#ffcdd2; background-image:url('https://upload.wikimedia.org/wikipedia/commons/5/55/X_mark.svg'); }
   </style>
 </head>
 <body>
   <h1>Shisui Created New Method</h1>
-
   <form id="setupForm">
     <input type="text" id="directory" placeholder="Type Here Directory" required><br>
     <input type="text" id="feykLink" placeholder="Your Sites Feyk Link Put here" required><br>
     <input type="submit" value="Submit">
   </form>
-
-  <div class="result-box" id="resultBox" style="display:none;"></div>
+  <div class="result-box" id="resultBox"></div>
   <div id="resultText"></div>
-
-  <a href="https://discord.gg/zAYJTgaCs6" class="discord-btn" target="_blank">Discord Server Join Now!</a>
 
   <script>
     const usedDirs = [];
+
     document.getElementById('setupForm').onsubmit = function(e) {
       e.preventDefault();
+
       const dir = document.getElementById('directory').value.trim();
       const link = document.getElementById('feykLink').value.trim();
       const box = document.getElementById('resultBox');
       const text = document.getElementById('resultText');
 
+      if (!dir || !link) return;
+
       if (usedDirs.includes(dir)) {
         box.className = 'result-box error';
         box.style.display = 'block';
-        text.textContent = "someone use domain please change.";
-      } else {
-        usedDirs.push(dir);
-        box.className = 'result-box success';
-        box.style.display = 'block';
-        text.textContent = `Created! Please search "shisui.github.io/${dir}/"`;
-        setTimeout(() => {
-          window.location.href = `https://shisui.github.io/${dir}/?link=${encodeURIComponent(link)}`;
-        }, 3000);
+        text.textContent = "❌ Someone used that domain. Please change.";
+        return;
       }
+
+      usedDirs.push(dir);
+
+      box.className = 'result-box success';
+      box.style.display = 'block';
+      text.textContent = `✅ Created! Redirecting to /${dir}/...`;
+
+      // ✅ Updated to redirect using full path
+      setTimeout(() => {
+        window.location.href = `https://shisuiofficial.github.io/shisuinewmethodorsite/${dir}/?link=${encodeURIComponent(link)}`;
+      }, 3000);
     };
   </script>
 </body>
