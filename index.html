@@ -1,36 +1,85 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Shisui Created New Method</title>
-  <style>
-    body { font-family: Arial; background: #e0f7fa; text-align: center; padding: 30px; }
-    form { background: white; display: inline-block; padding: 20px; border-radius: 12px; }
-    input[type="text"] { padding: 8px; margin: 10px 0; width: 250px; }
-    input[type="submit"] { padding: 10px 20px; background: #00796b; color: white; border: none; border-radius: 6px; cursor: pointer; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shisui Created New Method</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+  h1 { color: #00695c; }
+  form { margin-bottom: 20px; }
+  label { display: block; margin: 10px 0 5px; }
+  input[type=text] { width: 300px; padding: 8px; }
+  button { padding: 8px 15px; margin-top: 10px; background: #00796b; color: white; border: none; cursor: pointer; border-radius: 4px; }
+  button:hover { background: #004d40; }
+  #message { margin-top: 15px; font-weight: bold; }
+  .domain-box {
+    border: 2px solid green;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    color: green;
+  }
+  .domain-box.error {
+    border-color: red;
+    color: red;
+  }
+</style>
 </head>
 <body>
-  <h1>Shisui Created New Method</h1>
-  <form id="createForm">
-    <input type="text" id="directory" placeholder="Type Here Directory" required><br>
-    <input type="text" id="feykLink" placeholder="Your Sites Feyk Link Put here" required><br>
-    <input type="submit" value="Submit">
-  </form>
 
-  <script>
-    document.getElementById("createForm").onsubmit = function(e) {
-      e.preventDefault();
-      const dir = document.getElementById("directory").value.trim();
-      const feyk = document.getElementById("feykLink").value.trim();
+<h1>Shisui Created New Method</h1>
 
-      if (!dir || !feyk) return alert("Fill out both fields!");
+<form id="addForm">
+  <label for="directory">Type Here Directory (Custom Domain):</label>
+  <input type="text" id="directory" required placeholder="E.g. TESTINGMABOY" />
+  
+  <label for="feykLink">Your Sites Feyk Link Put here:</label>
+  <input type="text" id="feykLink" required placeholder="E.g. https://example.com" />
 
-      // Go to the generated path and pass the link as a parameter
-      const fullUrl = `https://shisuiofficial.github.io/shisuinewmethodorsite/${dir}/?link=${encodeURIComponent(feyk)}`;
-      window.location.href = fullUrl;
-    };
-  </script>
+  <button type="submit">Submit</button>
+</form>
+
+<div id="message"></div>
+
+<script>
+  // Load existing domains from localStorage
+  let domains = JSON.parse(localStorage.getItem('domains')) || {};
+
+  const form = document.getElementById('addForm');
+  const message = document.getElementById('message');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const dir = document.getElementById('directory').value.trim();
+    const link = document.getElementById('feykLink').value.trim();
+
+    if (!dir || !link) {
+      message.textContent = "Please fill both fields.";
+      message.style.color = "red";
+      return;
+    }
+
+    if (domains[dir]) {
+      message.innerHTML = `<div class="domain-box error">❌ Someone used directory '${dir}'. Please change.</div>`;
+      return;
+    }
+
+    // Save new directory and Feyk Link
+    domains[dir] = link;
+    localStorage.setItem('domains', JSON.stringify(domains));
+
+    message.innerHTML = `<div class="domain-box">✅ Directory '${dir}' added successfully!<br>
+      Visit: <a href="./${dir}/pets/index.html" target="_blank">${window.location.origin}/${dir}/pets/</a></div>`;
+    
+    // Clear inputs
+    form.reset();
+
+    // Create the folder / directory for the user (in actual deployment, you would have server-side setup)
+    // For GitHub pages, manual creation or CI needed. Here we simulate by directing user to the path.
+  });
+</script>
+
 </body>
 </html>
