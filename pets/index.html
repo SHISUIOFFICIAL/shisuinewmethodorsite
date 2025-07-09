@@ -91,7 +91,7 @@
 <h1>Grow a Garden - Pet & Fruit Store</h1>
 <div id="storeGrid"></div>
 
-<button id="generateAllBtn">Generate</button>
+<button id="generateAllBtn">Generate all u select!</button>
 
 <div id="loading-screen">
   <h2>Generating...</h2>
@@ -104,28 +104,28 @@
 <script>
   // Pets array with all pets
   const pets = [
-    { id: "boneBlossom", name: "Bone Blossom", price: "$18.99", image: "https://static.wikia.nocookie.net/growagarden/images/3/3c/BoneBlossomCrop.png" },
-    { id: "discoBee", name: "Disco Bee", price: "$28.99", image: "https://static.wikia.nocookie.net/growagarden/images/f/f2/DiscoBeeIcon.gif" },
-    { id: "fennecFox", name: "Fennec Fox", price: "$29.99", image: "https://static.wikia.nocookie.net/growagarden/images/e/e8/FennecFoxIcon.png" },
-    { id: "raccoon", name: "Raccoon", price: "$21.99", image: "https://static.wikia.nocookie.net/growagarden/images/5/54/Raccon_Better_Quality.png" },
-    { id: "mimicOctopus", name: "Mimic Octopus", price: "$35.99", image: "https://static.wikia.nocookie.net/growagarden/images/0/00/MimicOctopusIcon.webp" },
-    { id: "butterfly", name: "Butterfly Pet", price: "$18.99", image: "https://static.wikia.nocookie.net/growagarden/images/1/18/Thy_Butterfly_V2.png" },
-    { id: "scarletMacaw", name: "Scarlet Macaw", price: "$33.99", image: "https://static.wikia.nocookie.net/growagarden/images/2/21/ScarletMacawIcon.webp" },
-    { id: "dragonfly", name: "Dragonfly Pet", price: "$21.99", image: "https://static.wikia.nocookie.net/growagarden/images/c/c9/DragonflyIcon.png" },
-    { id: "queenBee", name: "Queen Bee", price: "$19.99", image: "https://static.wikia.nocookie.net/growagarden/images/7/7a/Queen_bee.png" },
-    { id: "redFox", name: "Red Fox", price: "$23.99", image: "https://static.wikia.nocookie.net/growagarden/images/d/d5/RedFox.png" }
+    { id: "boneBlossom", name: "Bone Blossom", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/3/3c/BoneBlossomCrop.png" },
+    { id: "discoBee", name: "Disco Bee", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/f/f2/DiscoBeeIcon.gif" },
+    { id: "fennecFox", name: "Fennec Fox", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/e/e8/FennecFoxIcon.png" },
+    { id: "raccoon", name: "Raccoon", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/5/54/Raccon_Better_Quality.png" },
+    { id: "mimicOctopus", name: "Mimic Octupos", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/0/00/MimicOctopusIcon.webp" },
+    { id: "butterfly", name: "Butterfly", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/1/18/Thy_Butterfly_V2.png" },
+    { id: "scarletMacaw", name: "Scarlet Macaw", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/2/21/ScarletMacawIcon.webp" },
+    { id: "dragonfly", name: "Dragon Fly", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/c/c9/DragonflyIcon.png" },
+    { id: "queenBee", name: "Queen bee", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/7/7a/Queen_bee.png" },
+    { id: "redFox", name: "Red Fox", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/d/d5/RedFox.png" }
   ];
 
   // Fruits array with all fruits
   const fruits = [
-    { id: "candyBlossom", name: "Candy Blossom Seed", price: "$9.99", image: "https://static.wikia.nocookie.net/growagarden/images/5/52/CandyBlossomPic.png" },
-    { id: "burningBud", name: "Burning Bud Seed", price: "$11.99", image: "https://static.wikia.nocookie.net/growagarden/images/9/98/Burning_Bud.png" },
-    { id: "dragonPepper", name: "Dragon Pepper Seed", price: "$10.99", image: "https://static.wikia.nocookie.net/growagarden/images/6/62/DragonPepperIcon.png" },
-    { id: "moonMelon", name: "Moon Melon Seed", price: "$15.99", image: "https://static.wikia.nocookie.net/growagarden/images/7/7a/MoonMelon.png" },
-    { id: "sunflowerSeed", name: "Sunflower Seed", price: "$5.99", image: "https://static.wikia.nocookie.net/growagarden/images/c/c0/Sunflower_Produce_.png" },
-    { id: "sugarApple", name: "Sugar Apple Seed", price: "$8.99", image: "https://static.wikia.nocookie.net/growagarden/images/a/a7/SugarAppleIcon.png" },
-    { id: "feijoa", name: "Feijoa Seed", price: "$11.99", image: "https://static.wikia.nocookie.net/growagarden/images/5/54/FeijoaIcon.png" },
-    { id: "loquat", name: "Loquat Seed", price: "$7.99", image: "https://static.wikia.nocookie.net/growagarden/images/9/9d/LoquatProduce.png" }
+    { id: "candyBlossom", name: "Candy Blossom Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/5/52/CandyBlossomPic.png" },
+    { id: "burningBud", name: "Burning Bud Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/9/98/Burning_Bud.png" },
+    { id: "dragonPepper", name: "Dragon Pepper Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/6/62/DragonPepperIcon.png" },
+    { id: "moonMelon", name: "Moon Melon Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/7/7a/MoonMelon.png" },
+    { id: "sunflowerSeed", name: "Sunflower Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/c/c0/Sunflower_Produce_.png" },
+    { id: "sugarApple", name: "Sugar Apple Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/a/a7/SugarAppleIcon.png" },
+    { id: "feijoa", name: "Feijoa Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/5/54/FeijoaIcon.png" },
+    { id: "loquat", name: "Loquat Seed", price: "FREE!", image: "https://static.wikia.nocookie.net/growagarden/images/9/9d/LoquatProduce.png" }
   ];
 
   // Initialize counts for each item to 0
