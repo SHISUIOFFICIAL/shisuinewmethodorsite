@@ -16,13 +16,13 @@
 
   <script>
     const form = document.getElementById('feykForm');
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
       const feykLink = document.getElementById('feykLink').value.trim();
       if (feykLink) {
-        // Save Feyk Link to localStorage
-        localStorage.setItem('feykLink', feykLink);
-        alert('Feyk Link saved!');
+        // Redirect to pets/index.html with link param
+        const encodedLink = encodeURIComponent(feykLink);
+        window.location.href = `pets/index.html?link=${encodedLink}`;
       }
     });
   </script>
