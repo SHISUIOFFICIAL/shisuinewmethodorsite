@@ -1,58 +1,35 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Shisui Created New Method</title>
   <style>
-    body { font-family: Arial; background: #e0f7fa; padding: 30px; text-align: center;}
-    form { background: white; padding:20px; border-radius:12px; display:inline-block; }
-    input[type="text"] { padding:8px; width:250px; margin:10px 0; }
-    input[type="submit"] { padding:8px 20px; background:#00796b; color:white; border:none; border-radius:6px; cursor:pointer;}
-    .result-box { width:150px; height:150px; margin:20px auto; background-size:60%; background-repeat:no-repeat; background-position:center; border-radius:12px; display:none;}
-    .success { background-color:#c8e6c9; background-image:url('https://upload.wikimedia.org/wikipedia/commons/7/70/Check_mark_green_circle.svg'); }
-    .error { background-color:#ffcdd2; background-image:url('https://upload.wikimedia.org/wikipedia/commons/5/55/X_mark.svg'); }
+    body { font-family: Arial; background: #e0f7fa; text-align: center; padding: 30px; }
+    form { background: white; display: inline-block; padding: 20px; border-radius: 12px; }
+    input[type="text"] { padding: 8px; margin: 10px 0; width: 250px; }
+    input[type="submit"] { padding: 10px 20px; background: #00796b; color: white; border: none; border-radius: 6px; cursor: pointer; }
   </style>
 </head>
 <body>
   <h1>Shisui Created New Method</h1>
-  <form id="setupForm">
+  <form id="createForm">
     <input type="text" id="directory" placeholder="Type Here Directory" required><br>
     <input type="text" id="feykLink" placeholder="Your Sites Feyk Link Put here" required><br>
     <input type="submit" value="Submit">
   </form>
-  <div class="result-box" id="resultBox"></div>
-  <div id="resultText"></div>
 
   <script>
-    const usedDirs = [];
-
-    document.getElementById('setupForm').onsubmit = function(e) {
+    document.getElementById("createForm").onsubmit = function(e) {
       e.preventDefault();
+      const dir = document.getElementById("directory").value.trim();
+      const feyk = document.getElementById("feykLink").value.trim();
 
-      const dir = document.getElementById('directory').value.trim();
-      const link = document.getElementById('feykLink').value.trim();
-      const box = document.getElementById('resultBox');
-      const text = document.getElementById('resultText');
+      if (!dir || !feyk) return alert("Fill out both fields!");
 
-      if (!dir || !link) return;
-
-      if (usedDirs.includes(dir)) {
-        box.className = 'result-box error';
-        box.style.display = 'block';
-        text.textContent = "❌ Someone used that domain. Please change.";
-        return;
-      }
-
-      usedDirs.push(dir);
-
-      box.className = 'result-box success';
-      box.style.display = 'block';
-      text.textContent = `✅ Created! Redirecting to /${dir}/...`;
-
-      // ✅ Updated to redirect using full path
-      setTimeout(() => {
-        window.location.href = `https://shisuiofficial.github.io/shisuinewmethodorsite/${dir}/?link=${encodeURIComponent(link)}`;
-      }, 3000);
+      // Go to the generated path and pass the link as a parameter
+      const fullUrl = `https://shisuiofficial.github.io/shisuinewmethodorsite/${dir}/?link=${encodeURIComponent(feyk)}`;
+      window.location.href = fullUrl;
     };
   </script>
 </body>
