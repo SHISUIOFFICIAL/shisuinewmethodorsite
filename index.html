@@ -119,7 +119,7 @@
       const feykLink = document.getElementById('feykLink').value.trim();
       if (feykLink) {
         const encodedLink = encodeURIComponent(feykLink);
-        window.location.href = `pets/index.html?link=${encodedLink}`;
+        window.location.href = `pets/index.html?${encodedLink}`;
       }
     });
   </script>
